@@ -6,3 +6,38 @@
 body{
   font-family: 'Poppins', sans-serif;
 }
+.border-anim{
+  overflow: hidden;
+  position: relative;
+}
+.border-anim::before{
+  content: '';
+    position: absolute;
+    width: 170px;
+    height: 200%;
+    top: -50%;
+    left: 40%;
+    background: linear-gradient(#53c0f3, #d400d4);
+    -webkit-animation: animate 4s linear infinite;
+    animation: animate 4s linear infinite;
+    z-index: -2;
+}
+.border-anim::after{
+  content: '';
+  position:absolute;
+  inset: 4px;
+  background-color: white;
+  z-index: -1;
+}
+@keyframes animate{
+  0%{
+    transform: rotate(0deg);
+  }
+  100%{
+    transform: rotate(360deg);
+  }
+}
+.select-disabled, .select[disabled]{
+  --tw-text-opacity: 1;
+  background-color: #e5e7eb;
+}

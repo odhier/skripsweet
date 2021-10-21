@@ -6,7 +6,7 @@
    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
+   @yield('script-head')
  </head>
 
  <body class="bg-white">
@@ -25,7 +25,7 @@
 
    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
    <script src="/js/app.js"></script>
-   @yield('script')
+   @yield('script-footer')
 
  </body>
 

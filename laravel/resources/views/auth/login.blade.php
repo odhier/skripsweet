@@ -62,11 +62,11 @@
             </div>
             <div class="">
               <button class="mt-4 mb-3 w-full bg-indigo-900 hover:bg-indigo-800 text-white py-2 rounded-md transition duration-100">Login now</button>
-              <div class="flex  space-x-2 justify-center items-end bg-gray-900 hover:bg-gray-600 text-white py-2 rounded-md transition duration-100"">
+              <!-- <div class="flex  space-x-2 justify-center items-end bg-gray-900 hover:bg-gray-600 text-white py-2 rounded-md transition duration-100"">
 
             <img class=" h-5 cursor-pointer" src="https://imgur.kageurufu.net/arC60SB.jpg" alt="">
                 <button>Or sign-in with google</button>
-              </div>
+              </div> -->
             </div>
           </form>
           <p class="mt-8"> Dont have an account? <span class="cursor-pointer text-sm text-blue-600"><a href="/register">Register Now</a></span></p>

@@ -27,6 +27,7 @@
     },
     "dependencies": {
         "@fortawesome/fontawesome-free": "^5.15.4",
+        "@ryangjchandler/alpine-clipboard": "^2.0.0",
         "@tailwindcss/postcss7-compat": "^2.2.16",
         "alpinejs": "^3.4.2",
         "daisyui": "^1.14.2"

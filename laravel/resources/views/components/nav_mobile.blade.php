@@ -19,6 +19,7 @@
         <span><a href="#" class="text-secondary">Edit Profile</a></span>
       </div>
     </div>
+
     <div class="border-t border-white w-100 mb-4"></div>
     <li>
       <a>Encrypt</a>

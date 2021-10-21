@@ -86,6 +86,33 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./node_modules/@ryangjchandler/alpine-clipboard/src/index.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/@ryangjchandler/alpine-clipboard/src/index.js ***!
+  \********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = (function (Alpine) {
+    Alpine.magic('clipboard', () => {
+        return function (target) {
+            if (typeof target === 'function') {
+                target = target()
+            }
+
+            if (typeof target === 'object') {
+                target = JSON.stringify(target)
+            }
+
+            return window.navigator.clipboard.writeText(target)
+        }
+    })
+});
+
+/***/ }),
+
 /***/ "./node_modules/alpinejs/dist/module.esm.js":
 /*!**************************************************!*\
   !*** ./node_modules/alpinejs/dist/module.esm.js ***!
@@ -3363,7 +3390,10 @@ module.exports = g;
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var alpinejs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/module.esm.js");
+/* harmony import */ var _ryangjchandler_alpine_clipboard__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @ryangjchandler/alpine-clipboard */ "./node_modules/@ryangjchandler/alpine-clipboard/src/index.js");
 
+
+alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].plugin(_ryangjchandler_alpine_clipboard__WEBPACK_IMPORTED_MODULE_1__["default"]);
 window.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"];
 alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].start();
 
