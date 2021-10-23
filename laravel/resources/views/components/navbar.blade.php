@@ -26,10 +26,10 @@
         </svg></div>
       <ul tabindex="0" class="p-2 menu dropdown-content bg-base-100 rounded-box w-52">
         <li>
-          <a>History Encrypt</a>
+          <a href="{{route('encryptHistory')}}">History Encrypt</a>
         </li>
         <li>
-          <a>Histpry Decrypt</a>
+          <a href="{{route('decryptHistory')}}">History Decrypt</a>
         </li>
 
       </ul>

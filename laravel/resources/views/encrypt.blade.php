@@ -88,7 +88,6 @@
         data = JSON.parse(data)
 
         this.encrypt_id = data.id
-        console.log(data.message)
         this.key.val = data.key
         this.message.val = data.message
         this.p.val = data.p

@@ -22,16 +22,16 @@
 
     <div class="border-t border-white w-100 mb-4"></div>
     <li>
-      <a>Encrypt</a>
+      <a href="{{route('encrypt')}}">Encrypt</a>
     </li>
     <li>
-      <a>Decrypt</a>
+      <a href="{{route('decrypt')}}">Decrypt</a>
     </li>
     <li>
-      <a>History</a>
+      <a href="#">History</a>
       <ul>
-        <li><a href=""> History Encrypt</a></li>
-        <li><a href=""> History Decrypt</a></li>
+        <li><a href="{{route('encryptHistory')}}"> History Encrypt</a></li>
+        <li><a href="{{route('decryptHistory')}}"> History Decrypt</a></li>
       </ul>
     </li>
   </div>

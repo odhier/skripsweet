@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Decryption;
+use App\Encryption;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\{Route, Auth};
 
@@ -33,6 +35,18 @@ class HomeController extends Controller
     }
     public function indexForLoggedUser()
     {
-        return view('home');
+        $encrypt = Encryption::where('user_id', Auth::user()->id)
+            ->orderBy('created_at', 'desc')->orderBy('updated_at', 'desc')
+            ->get();
+        $decrypt = Decryption::where('user_id', Auth::user()->id)
+            ->orderBy('created_at', 'desc')->orderBy('updated_at', 'desc')
+            ->get();
+        $data = [
+            'recent_encrypt' => $encrypt->take(4),
+            'count_encrypt' => count($encrypt),
+            'recent_decrypt' => $decrypt->take(4),
+            'count_decrypt' => count($decrypt),
+        ];
+        return view('home', ['data' => $data]);
     }
 }

@@ -24,4 +24,8 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Encryption::class, 'user_id', 'id');
     }
+    public function decryption()
+    {
+        return $this->hasMany(Decryption::class, 'user_id', 'id');
+    }
 }

@@ -23,6 +23,12 @@ class EncryptController extends Controller
 
         return view('encrypt', ['data' => $encryption]);
     }
+    public function history()
+    {
+        $encrypt = $this->model::where('user_id', Auth::user()->id)
+            ->orderBy('created_at', 'desc')->orderBy('updated_at', 'desc')->get();
+        return view('encrypt_history', ['data' => $encrypt]);
+    }
     public function encryptRSA(Encryption $request)
     {
         $validated = $request->validated();
@@ -30,11 +36,12 @@ class EncryptController extends Controller
             if ($this->model::find($request->encrypt_id, 'user_id')->user_id != Auth::user()->id)
                 return response()->json(['message' => 'Unauthorized'], 401);
         }
-        $ciphertext = $this->vigenere($request->key, $request->message);
-        $cipherkey = $this->RSA($request->key, $request->public_key);
+        $key = str_replace(" ", '', $request->key);
+        $ciphertext = $this->vigenere($key, $request->message);
+        $cipherkey = $this->RSA($key, $request->public_key);
         $data = [
             'user_id' => Auth::user()->id,
-            'key' => trim($request->key),
+            'key' => trim($key),
             'message' => trim($request->message),
             'cipherkey' => trim($cipherkey),
             'ciphertext' => trim($ciphertext),
@@ -55,6 +62,7 @@ class EncryptController extends Controller
                 $data['encrypt_id'] = $request->encrypt_id;
             }
         } catch (Throwable $e) {
+
             report($e);
             return false;
         }
@@ -76,21 +84,25 @@ class EncryptController extends Controller
         $encrypt = $this->model::findOrFail($request->encrypt_id);
         $cipherkey_l = str_pad(strlen($encrypt->cipherkey), 6, '0', STR_PAD_LEFT);
         $ciphertext_l = str_pad(strlen($encrypt->ciphertext), 6, '0', STR_PAD_LEFT);
-        $text_length = $this->toBin($cipherkey_l . "-" . $ciphertext_l);
+        $text_length = $this->strigToBinary($cipherkey_l . "-" . $ciphertext_l);
+
         $cipherkey_bin = $this->strigToBinary($encrypt->cipherkey);
         $ciphertext_bin = $this->strigToBinary($encrypt->ciphertext);
         $max_l = (strlen($cipherkey_bin) > strlen($ciphertext_bin)) ? strlen($cipherkey_bin) : strlen($ciphertext_bin);
         $y = 0;
         $i = 0;
+
+        // dd(imagecolorat($img, 2, 0));
         // dd((strlen($cipherkey_bin) > strlen($ciphertext_bin)) ? strlen($cipherkey_bin) : strlen($ciphertext_bin));
         while ($y < getimagesize($request->image)[1] && $i < $max_l) {
             $x = 0;
             while ($x < getimagesize($request->image)[0] && $i < $max_l) {
                 $rgb = imagecolorat($img, $x, $y);
 
-                $r = ($rgb >> 16) & 0xFF;
+                $r = ($rgb >> 16) & 255;
                 $g = ($rgb >> 8) & 0xFF;
                 $b = $rgb & 0xFF;
+
                 if ($i < strlen($text_length)) {
                     $r_bin = $this->toBin($r);
                     $r_bin[strlen($r_bin) - 1] = $text_length[$i];
@@ -106,7 +118,6 @@ class EncryptController extends Controller
                     $b_bin[strlen($b_bin) - 1] = $ciphertext_bin[$i];
                     $b = $this->toString($b_bin);
                 }
-
                 imagesetpixel($img, $x, $y, imagecolorallocate($img, $r, $g, $b));
 
                 $i++;
@@ -114,15 +125,14 @@ class EncryptController extends Controller
             }
             $y++;
         }
+
+        // dd(imagecolorat($img, 2, 0));
         try {
-            if ($request->image->getClientOriginalExtension() == "jpg" || $request->image->getClientOriginalExtension() == "jpeg")
-                imagejpeg($img, storage_path('app/public/' . $fileName . '_encrypted.' . $request->image->getClientOriginalExtension()));
-            else if ($request->image->getClientOriginalExtension() == "png")
-                imagepng($img, storage_path('app/public/' . $fileName . '_encrypted.' . $request->image->getClientOriginalExtension()));
+            imagepng($img, storage_path('app/public/' . $fileName . '_result.png'));
 
             $data = [
                 'original_img' => $fileName . '.' . $request->image->getClientOriginalExtension(),
-                'encrypted_img' => $fileName . '_encrypted.' . $request->image->getClientOriginalExtension(),
+                'encrypted_img' => $fileName . '_result.png',
                 'upload_at' => \Carbon\Carbon::now()
             ];
             $this->model::where('id', $request->encrypt_id)->update($data);
